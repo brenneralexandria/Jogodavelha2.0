@@ -1,48 +1,61 @@
 body {
-    border: none;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: none;
     margin: 0;
-    border: 0;
-}
+  }
 
 h1 {
-    margin-top: -15px;
+    margin-top: 0px;
     border: none;
 }
 
 .container {
+    width: 300px;
+    height: 300px;
     background-color: #fc0;
-    width: 200px;
-    height: 170px;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    margin-top: 15%;
-    margin-left: 40%;
 }
 
 .nome {
     margin: 0;
-    margin-bottom: 10px;
+    margin: 0.5em;
+    padding: 0.60em;
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+    outline: none;
 }
 
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+
+}    
 .Botão1 {
-    margin-top: 10px;
-    display: inline;
-    text-align: center;
-    float: center;
     cursor: pointer;
+    margin: 0.5em;
+    padding: 0.6em;
+    
 }
 
 .Botão2 {
-    margin-top: 10px;
-    float: center;
     cursor: pointer;
+    margin: 0.5em;
+    padding: 0.6em;
 }
 
 .Botão3 {
-    margin-top: 10px;
-    display: inline;
-    float: center;
-    margin-right: 33px;
     cursor: pointer;
+    margin: 0.5em;
+    padding: 0.6em;
+
 }
