@@ -38,6 +38,8 @@ h1 {
     width: 120px;
     margin-top: 30px;
     font-size: 40px;
+    cursor: pointer;
+    margin-bottom: 40px;
 }
 
 .Botão2 {
@@ -45,4 +47,22 @@ h1 {
     height: 120px;
     width: 120px;
     font-size: 40px;
+    cursor: pointer;
 }
+
+
+.btn-voltar {
+    cursor: pointer;
+    margin: 0.5em;
+    padding: 0.6em;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    width: 160px;
+    background-color: #e5e5e5;
+    color: #000;
+
+}
+
+.btn-voltar:hover {
+    background-color: rgb(197, 193, 193);
+}    
