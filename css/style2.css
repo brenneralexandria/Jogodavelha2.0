@@ -28,32 +28,34 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-}
-
-.btn-container2 {
-    display: center;
+        display: center;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    
 }
 
-.Botão1 {
-    padding: 20px;
-    height: 120px;
-    width: 120px;
-    margin-top: 30px;
-    font-size: 40px;
+.Botão4 {
     cursor: pointer;
-    margin-bottom: 40px;
+    margin: 0.5em;
+    padding: 0.6em;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 300px;
+    background-color: #e5e5e5;
+    color: #000;
 }
 
-.Botão2 {
-    padding: 20px;
-    height: 120px;
-    width: 120px;
-    font-size: 40px;
+.Botão5 {
     cursor: pointer;
+    margin: 0.5em;
+    padding: 0.6em;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 300px;
+    background-color: #e5e5e5;
+    color: #000;
 }
 
 
