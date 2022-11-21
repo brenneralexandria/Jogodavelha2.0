@@ -1,12 +1,13 @@
 // Regras do jogo e decidindo se houve vitória/empate
 
-let FinalDeJogo = false;
-
 // valindando que todas as células são clicáveis. 
 const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
 const BotaoReiniciar = document.querySelector("[btn-reiniciar]");
+
+// Declarando uma variável para mudança de jogador.
+let proximajogada = true;
 
 // declaração de caracter para os jogadores.
 const jogadorX = "X";
@@ -29,39 +30,18 @@ document.addEventListener("click", (event) => {
     // identificar que meus cliques vão ser só dentro da célula.
     if(event.target.matches(".cell")) {
         // Identidicar qual a célula que foi clicada.
-        jogar(event.target.id, jogadorX);
-        Bot();
+        jogar(event.target.id);
     }   
 });
 
-function Bot() {
-    const posicoesDisponiveis = [];
-    for (index in cells) {
-        if(!isNaN(index)) {
-            if(
-                !cells[index].classList.contains("X") && 
-                !cells[index].classList.contains("O")
-        ) {
-            posicoesDisponiveis.push(index);
-        }
-    }
-}
-
-    const PosicaoAleatoria = math.floor(
-        Math.random() * jogadasvencedoras.length
-    );
-
-        if (!FinalDeJogo) {
-            jogar(posicoesDisponiveis[PosicaoAleatoria], jogadorO);
-    }
-}   
-
 // Função para começar o jogo e ideintificar de quem é a vez de jogar.
-function jogar(id, jogada) {
+function jogar(id) {
     const cell = document.getElementById(id);
     cell.classList.remove(jogadorX);
     cell.classList.remove(jogadorO);
     MensagemVitoria.classList.remove('MostrarMensagem');
+    // Mudar a vez do jogador.
+    jogada = proximajogada ? jogadorX : jogadorO;
     cell.textContent = jogada;
     cell.classList.add(jogada);
     jogadorvencedor(jogada);
@@ -69,7 +49,6 @@ function jogar(id, jogada) {
 }
 
 function finalizarjogo(vencedor = null) {
-    fimDeJogo = true;
     if (vencedor) {
         TextoVitoria.innerText = "Vencedor: " + vencedor;
     } else {
@@ -90,6 +69,8 @@ function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
         finalizarjogo(jogada);
     } else if (Velha()) {
         finalizarjogo();
+    } else {
+        proximajogada = !proximajogada;
     }
 }
 
@@ -99,10 +80,9 @@ function Velha() {
 
     for (index in cells) {
         if(!isNaN(index)) {
-            if(cells[index].classList.contains(jogadorX)) {
+        if(cells[index].classList.contains(jogadorX)) {
             x++;
         }
-
         if (cells[index].classList.contains(jogadorO)) {
             o++;
         }
@@ -110,3 +90,5 @@ function Velha() {
 }
     return x + o === 9 ? true : false;
 }
+
+BotaoReiniciar.addEventListener("click", jogar);
