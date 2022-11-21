@@ -1,12 +1,12 @@
-// Regras do jogo e decidindo se houve vitória/empate
-
-let FinalDeJogo = false;
+// Jogo vs a máquina
 
 // valindando que todas as células são clicáveis. 
 const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
 const BotaoReiniciar = document.querySelector("[btn-reiniciar]");
+
+let FinalDeJogo = false;
 
 // declaração de caracter para os jogadores.
 const jogadorX = "X";
@@ -30,7 +30,7 @@ document.addEventListener("click", (event) => {
     if(event.target.matches(".cell")) {
         // Identidicar qual a célula que foi clicada.
         jogar(event.target.id, jogadorX);
-        Bot();
+        setTimeout(() => Bot(), 500);
     }   
 });
 
@@ -47,12 +47,12 @@ function Bot() {
     }
 }
 
-    const PosicaoAleatoria = math.floor(
-        Math.random() * jogadasvencedoras.length
+    const posicaoAleatoria = Math.floor(
+        Math.random() * posicoesDisponiveis.length
     );
 
-        if (!FinalDeJogo) {
-            jogar(posicoesDisponiveis[PosicaoAleatoria], jogadorO);
+        if(!FinalDeJogo) {
+            jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO);
     }
 }   
 
@@ -69,7 +69,7 @@ function jogar(id, jogada) {
 }
 
 function finalizarjogo(vencedor = null) {
-    fimDeJogo = true;
+    finalDeJogo = true;
     if (vencedor) {
         TextoVitoria.innerText = "Vencedor: " + vencedor;
     } else {
