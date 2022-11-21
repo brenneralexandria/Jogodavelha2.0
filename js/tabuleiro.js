@@ -2,6 +2,9 @@
 
 // valindando que todas as células são clicáveis. 
 const cells = document.querySelectorAll(".cell");
+const TextoVitoria = document.querySelector("[texto-de-vitoria]");
+const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
+const BotaoReiniciar = document.querySelector("[btn-reiniciar]");
 
 // Declarando uma variável para mudança de jogador.
 let proximajogada = true;
@@ -34,13 +37,26 @@ document.addEventListener("click", (event) => {
 // Função para começar o jogo e ideintificar de quem é a vez de jogar.
 function jogar(id) {
     const cell = document.getElementById(id);
+    cell.classList.remove(jogadorX);
+    cell.classList.remove(jogadorO);
+    MensagemVitoria.classList.remove('MostrarMensagem');
     // Mudar a vez do jogador.
     jogada = proximajogada ? jogadorX : jogadorO;
     cell.textContent = jogada;
     cell.classList.add(jogada);
     jogadorvencedor(jogada);
+    
 }
 
+function finalizarjogo(vencedor = null) {
+    if (vencedor) {
+        TextoVitoria.innerText = "Vencedor: " + vencedor;
+    } else {
+        TextoVitoria.innerText = "Velha";
+    }
+
+    MensagemVitoria.classList.add("MostrarMensagem");
+}
 
 function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
     const vencedor = jogadasvencedoras.some((jogds) => { // analisar dentro das jogadas vencedoras 1 por 1 se houve um vencedor.
@@ -75,10 +91,4 @@ function Velha() {
     return x + o === 9 ? true : false;
 }
 
-function finalizarjogo(vencedor = null) {
-    if (vencedor) {
-        alert("Vencedor: " + vencedor);
-    } else {
-        alert("Velha");
-    }
-}
+BotaoReiniciar.addEventListener("click", jogar);
