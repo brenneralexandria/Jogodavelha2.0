@@ -41,6 +41,7 @@ h1 {
     margin: 5px;
     cursor: pointer;
     margin-bottom: 10px;
+    color: black
 }
 
 .btn-voltar2 {
@@ -56,7 +57,7 @@ h1 {
     background-color: rgb(197, 193, 193);
 }
 
-.btn-reiniciar {
+.reiniciar {
     cursor: pointer;
     text-decoration: none;
     border: 1px solid #ccc;
