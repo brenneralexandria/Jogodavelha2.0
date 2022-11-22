@@ -58,10 +58,13 @@ function Bot() {
 
 // Função para começar o jogo e ideintificar de quem é a vez de jogar.
 function jogar(id, jogada) {
+
     const cell = document.getElementById(id);
-    cell.classList.remove(jogadorX);
-    cell.classList.remove(jogadorO);
+    
+    cell.classList.remove("X");
+    cell.classList.remove("O");
     MensagemVitoria.classList.remove('MostrarMensagem');
+    
     cell.textContent = jogada;
     cell.classList.add(jogada);
     jogadorvencedor(jogada);
@@ -69,7 +72,7 @@ function jogar(id, jogada) {
 }
 
 function finalizarjogo(vencedor = null) {
-    finalDeJogo = true;
+    FinalDeJogo = true;
     if (vencedor) {
         TextoVitoria.innerText = "Vencedor: " + vencedor;
     } else {
@@ -77,6 +80,13 @@ function finalizarjogo(vencedor = null) {
     }
 
     MensagemVitoria.classList.add("MostrarMensagem");
+    
+    let contador = 3;
+    setInterval(() => {
+       MensagemVitoria.innerHTML = `Reiniciando em  ${contador--}`; 
+    }, 1000);
+
+    setTimeout(() => location.reload(), 4000);
 }
 
 function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
@@ -90,6 +100,7 @@ function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
         finalizarjogo(jogada);
     } else if (Velha()) {
         finalizarjogo();
+    }else {
     }
 }
 
@@ -110,3 +121,5 @@ function Velha() {
 }
     return x + o === 9 ? true : false;
 }
+
+botaoReiniciar.addEventListener("click", jogar);
