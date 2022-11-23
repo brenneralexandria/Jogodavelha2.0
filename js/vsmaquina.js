@@ -4,13 +4,16 @@
 const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
-const BotaoReiniciar = document.querySelector("[btn-reiniciar]");
 
 let FinalDeJogo = false;
 
 // declaração de caracter para os jogadores.
 const jogadorX = "X";
 const jogadorO = "O";
+
+function vsmaquina() {
+
+}
 
 const jogadasvencedoras = [ // Jogadas para ganhar
 
@@ -60,11 +63,7 @@ function Bot() {
 function jogar(id, jogada) {
 
     const cell = document.getElementById(id);
-    
-    cell.classList.remove("X");
-    cell.classList.remove("O");
-    MensagemVitoria.classList.remove('MostrarMensagem');
-    
+  
     cell.textContent = jogada;
     cell.classList.add(jogada);
     jogadorvencedor(jogada);
@@ -84,9 +83,9 @@ function finalizarjogo(vencedor = null) {
     let contador = 3;
     setInterval(() => {
        MensagemVitoria.innerHTML = `Reiniciando em  ${contador--}`; 
-    }, 1000);
+    }, 500);
 
-    setTimeout(() => location.reload(), 4000);
+    setTimeout(() => location.reload(), 300);
 }
 
 function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
@@ -121,5 +120,3 @@ function Velha() {
 }
     return x + o === 9 ? true : false;
 }
-
-botaoReiniciar.addEventListener("click", jogar);

@@ -1,9 +1,10 @@
-// Regras do jogo e decidindo se houve vitória/empate
+// Regras do jogo e decidindo se houve vitória/empate //
 
 // valindando que todas as células são clicáveis. 
 const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
+
 
 // Declarando uma variável para mudança de jogador.
 let proximajogada = true;
@@ -57,12 +58,12 @@ function finalizarjogo(vencedor = null) {
 
     MensagemVitoria.classList.add("MostrarMensagem");
 
-    let contador = 3;
+    let contador = 0;
     setInterval(() => {
        MensagemVitoria.innerHTML = `Reiniciando em  ${contador--}`; 
     }, 1000);
 
-    setTimeout(() => location.reload(), 4000);
+    setTimeout(() => location.reload(), 500);
 }
 
 function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
