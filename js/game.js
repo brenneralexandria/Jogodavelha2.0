@@ -69,12 +69,14 @@ function jogar(id) {
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            setTimeout(() => Bot(jogadorX.simbol), 500);
+            sleep(1500);
+            Bot(jogadorX.simbol);
         }
     }else {
         if(jogadorO.isBot) {
             console.log("Jogador O é um bot")
-            setTimeout(() => Bot(jogadorO.simbol), 500);
+            sleep(1500);
+            Bot(jogadorO.simbol);
         }
     }   
    
@@ -90,17 +92,21 @@ function jogar(id) {
         console.log("O jogo terminou");
         jogadorvencedor(jogada);
     }
+    sleep(1500);
+
     jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            setTimeout(() => Bot(jogadorX.simbol), 500);
+            sleep(1500);
+            Bot(jogadorX.simbol);
             proximajogada = ! proximajogada;
         }
     }else {
         if(jogadorO.isBot) {
             console.log("Jogador O é um bot")
-            setTimeout(() => Bot(jogadorO.simbol), 500);
+            sleep(1500);
+            Bot(jogadorO.simbol);
             proximajogada = ! proximajogada;
         }
     }
@@ -109,7 +115,7 @@ function jogar(id) {
             console.log("O jogo terminou");
             jogadorvencedor(jogada);
         }else {
-            setTimeout(() => jogar(), 500);
+            setTimeout(() => jogar(), 1000);
         }
         
     }    
@@ -155,17 +161,8 @@ function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor
     } else {
         MostrarJogadorVencedor(jogada);
     }
-
-    let contador = 0;
-    setInterval(() => {
-       MensagemVitoria.innerHTML = `Reiniciando em  ${contador--}`; 
-    }, 1000);
-
-    setTimeout(() => location.reload(), 500); 
-}
-
-
-
+    setTimeout(() => document.location.reload(true), 10000);
+} 
 
 function JogoTerminou(jogada) {
     const vencedor = jogadasvencedoras.some((jogds) => { // analisar dentro das jogadas vencedoras 1 por 1 se houve um vencedor.
@@ -192,3 +189,5 @@ function Velha() {
 }
     return x + o === 9 ? true : false;
 }
+
+const sleep = ms => new Promise(r => setTimeout(r, ms)); // fazer a função esperar X segundos
