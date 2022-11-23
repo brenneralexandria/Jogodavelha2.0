@@ -104,6 +104,15 @@ function jogar(id) {
             proximajogada = ! proximajogada;
         }
     }
+    if(TipoDeJogo === "automatico") {
+        if(JogoTerminou(jogada) || Velha())  {
+            console.log("O jogo terminou");
+            jogadorvencedor(jogada);
+        }else {
+            setTimeout(() => jogar(), 500);
+        }
+        
+    }    
 }
 
 function Bot(jogada) {
