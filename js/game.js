@@ -65,18 +65,19 @@ function jogar(id) {
     const cell = document.getElementById(id);
     // Mudar a vez do jogador.
     let jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
+
+
+    
     console.log("Realizando a jogada " + jogada);
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            sleep(1500);
-            Bot(jogadorX.simbol);
+            setTimeout(() =>  Bot(jogadorX.simbol), 1000);
         }
     }else {
         if(jogadorO.isBot) {
             console.log("Jogador O é um bot")
-            sleep(1500);
-            Bot(jogadorO.simbol);
+            setTimeout(() =>  Bot(jogadorO.simbol), 1000);
         }
     }   
    
@@ -91,37 +92,43 @@ function jogar(id) {
     if(JogoTerminou(jogada) || Velha())  {
         console.log("O jogo terminou");
         jogadorvencedor(jogada);
+        return;
     }
-    sleep(1500);
 
     jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            sleep(1500);
-            Bot(jogadorX.simbol);
+            setTimeout(() =>  Bot(jogadorX.simbol), 1000);
             proximajogada = ! proximajogada;
+            
         }
     }else {
         if(jogadorO.isBot) {
             console.log("Jogador O é um bot")
-            sleep(1500);
-            Bot(jogadorO.simbol);
+            setTimeout(() =>  Bot(jogadorO.simbol), 1000);
             proximajogada = ! proximajogada;
+            
         }
     }
+
+    if(JogoTerminou(jogada) || Velha())  {
+        console.log("O jogo terminou");
+        jogadorvencedor(jogada);
+        return;
+    }
+
     if(TipoDeJogo === "automatico") {
-        if(JogoTerminou(jogada) || Velha())  {
-            console.log("O jogo terminou");
-            jogadorvencedor(jogada);
-        }else {
-            setTimeout(() => jogar(), 1000);
-        }
-        
+        setTimeout(() => jogar(), 1000);       
     }    
 }
 
 function Bot(jogada) {
+    if(JogoTerminou(jogada) || Velha())  {
+        console.log("O jogo terminou");
+        jogadorvencedor(jogada);
+        return;
+    }
     const posicoesDisponiveis = [];
     for (index in cells) {
         if(!isNaN(index)) {
@@ -149,19 +156,18 @@ function MostrarJogadorVencedor(jogada) {
     MensagemVitoria.classList.add("MostrarMensagem");
 }
 
-function MostrarVelha() {
+function MostrarVelha() { // Mensagem de empate
     TextoVitoria.innerText = "Velha";
-
     MensagemVitoria.classList.add("MostrarMensagem");
 }
 
-function jogadorvencedor(jogada) { // Identidicar quem foi o vencendor 
+function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos players
     if (Velha()) {
         MostrarVelha();   
-    } else {
+    }else {
         MostrarJogadorVencedor(jogada);
     }
-    setTimeout(() => document.location.reload(true), 10000);
+    setTimeout(() => document.location.reload(true), 2000);
 } 
 
 function JogoTerminou(jogada) {
@@ -173,7 +179,7 @@ function JogoTerminou(jogada) {
     return vencedor;
 }
 
-function Velha() {
+function Velha() { // função para detectar se o jogo deu empate
     let x = 0;
     let o = 0;
 
@@ -189,5 +195,3 @@ function Velha() {
 }
     return x + o === 9 ? true : false;
 }
-
-const sleep = ms => new Promise(r => setTimeout(r, ms)); // fazer a função esperar X segundos
