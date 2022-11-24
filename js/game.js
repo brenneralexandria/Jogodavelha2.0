@@ -1,4 +1,4 @@
-// valindando que todas as células são clicáveis. 
+// validando que todas as células são clicáveis. 
 const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
@@ -72,8 +72,9 @@ function jogar(id) {
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            setTimeout(() =>  Bot(jogadorX.simbol), 1000);
+            setTimeout(() =>  Bot(jogadorX.simbol), 700);
         }
+          
     }else {
         if(jogadorO.isBot) {
             console.log("Jogador O é um bot")
@@ -81,8 +82,6 @@ function jogar(id) {
         }
     }   
    
-    MensagemVitoria.classList.remove("MostrarMensagem");
-
     if(id) {
         cell.textContent = jogada;
         cell.classList.add(jogada);
@@ -99,7 +98,7 @@ function jogar(id) {
     if(jogada === 'X') {
         if(jogadorX.isBot) {
             console.log("Jogador X é um bot")
-            setTimeout(() =>  Bot(jogadorX.simbol), 1000);
+            setTimeout(() =>  Bot(jogadorX.simbol), 700);
             proximajogada = ! proximajogada;
             
         }
@@ -115,7 +114,7 @@ function jogar(id) {
     if(JogoTerminou(jogada) || Velha())  {
         console.log("O jogo terminou");
         jogadorvencedor(jogada);
-        return;
+      
     }
 
     if(TipoDeJogo === "automatico") {
@@ -124,11 +123,7 @@ function jogar(id) {
 }
 
 function Bot(jogada) {
-    if(JogoTerminou(jogada) || Velha())  {
-        console.log("O jogo terminou");
-        jogadorvencedor(jogada);
-        return;
-    }
+
     const posicoesDisponiveis = [];
     for (index in cells) {
         if(!isNaN(index)) {
@@ -167,7 +162,7 @@ function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos playe
     }else {
         MostrarJogadorVencedor(jogada);
     }
-    setTimeout(() => document.location.reload(true), 2000);
+    setTimeout(() => document.location.reload(true), 8000);
 } 
 
 function JogoTerminou(jogada) {
@@ -180,18 +175,18 @@ function JogoTerminou(jogada) {
 }
 
 function Velha() { // função para detectar se o jogo deu empate
-    let x = 0;
-    let o = 0;
+    let X = jogadorX.simbol;
+    let O = jogadorO.simbol;
 
     for (index in cells) {
         if(!isNaN(index)) {
         if(cells[index].classList.contains(jogadorX.simbol)) {
-            x++;
+            X++;
         }
         if (cells[index].classList.contains(jogadorO.simbol)) {
-            o++;
+            O++;
         }
     }
 }
-    return x + o === 9 ? true : false;
+    return X + O === 9 ? true : false;
 }

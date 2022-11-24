@@ -12,7 +12,7 @@ body {
         rgb(243, 82, 8) 0%,
         #fc0 100%
     );
-  }
+}
 
 h1 {
     border: none;
@@ -29,6 +29,7 @@ h1 {
     text-align: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: none;
 }
 
 .cell {
@@ -36,10 +37,10 @@ h1 {
     height: 15px;
     background: #eee;
     display: inline-block;
-    padding: 11px;
+    padding: 15px;
     margin: 5px;
     cursor: pointer;
-    color: black
+    color: black 
 }
 
 .btn-container {
@@ -47,7 +48,7 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .Botão1 {
@@ -63,18 +64,7 @@ h1 {
 
 .Botão2 {
     cursor: pointer;
-    margin: 0.5em;
-    padding: 0.6em;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    width: 160px;
-    background-color: #e5e5e5;
-    color: #000;
-}
-
-.Botão3 {
-    cursor: pointer;
-    margin: 0.5em;
+    margin: 0.2em;
     padding: 0.6em;
     text-decoration: none;
     border: 1px solid #ccc;
@@ -91,10 +81,6 @@ h1 {
     background-color: rgb(197, 193, 193);
 }
 
-.Botão3:hover {
-    background-color: rgb(197, 193, 193);
-}
-
 .mensagemvitoria {
     display: none;
     position: fixed;
@@ -107,22 +93,6 @@ h1 {
     background-color: rgb(255, 138, 5);
     flex-direction: column;
 }
-
-.btn-reiniciar {
-    font-size: 2.5rem;
-    background-color: #fc0;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    margin-top: 16px;
-    color: white;
-}
-
-.btn-reiniciar:hover {
-    background-color: white;
-    color:#fc0
-} 
 
 .textovitoria {
     color: white;

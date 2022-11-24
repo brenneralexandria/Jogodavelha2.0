@@ -1,48 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="../css/style3.css" />
-    <title>Jogo da Velha</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Jogo da Velha</h1>
-
-     <div>
-        <div class="cell" id="0">-</div>
-        <div class="cell" id="1">-</div>
-        <div class="cell" id="2">-</div>
-    </div>
-
-    <div>
-        <div class="cell" id="3">-</div>
-        <div class="cell" id="4">-</div>
-        <div class="cell" id="5">-</div>
-    </div>
-
-    <div>
-        <div class="cell" id="6">-</div>
-        <div class="cell" id="7">-</div>
-        <div class="cell" id="8">-</div>
-    </div>   
-
-        <div class="btn-container"> 
-
-            <a onclick="IniciarJogo('vsplayer')" Class="Botão1" >Jogar vs.</a>
-            <a onclick="IniciarJogo('vsmaquina')" class="Botão2" >vs. Máquina</a> 
-            <a onclick="IniciarJogo('automatico')" class="Botão3" >Máquina vs. Máquina</a>     
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="../css/style.css" />
+        <title>Jogo da Velha</title>
+    </head>
     
+    <body>
+        <div class="container"> <!--Box onde vai ficar o jogo da velha-->
+            <h1>Jogo da Velha</h1>
+                <div>
+                    <div class="cell" id="0">-</div>
+                    <div class="cell" id="1">-</div>
+                    <div class="cell" id="2">-</div>
+                </div>
+
+                <div>
+                    <div class="cell" id="3">-</div>
+                    <div class="cell" id="4">-</div>
+                    <div class="cell" id="5">-</div>
+                </div>
+
+                <div>
+                    <div class="cell" id="6">-</div>
+                    <div class="cell" id="7">-</div>
+                    <div class="cell" id="8">-</div>
+                </div>
+
+                <div class="btn-container"> <!-- Box dos botões -->
+                    <a onclick="IniciarJogo('vsmaquina')" class="Botão1" >vs. Máquina</a> <!--Modos de jogo-->
+                    <a onclick="IniciarJogo('automatico')" class="Botão2" >Máquina vs. Máquina</a>
+                </div> 
         </div> 
+                <div class="mensagemvitoria" mensagem-de-vitoria>  <!--Mensagem para quem venceu ou velha-->
+                    <p class="textovitoria" texto-de-vitoria></p>
+                </div>
 
-    </div>
-
-    <div class="mensagemvitoria" mensagem-de-vitoria>
-        <p class="textovitoria" texto-de-vitoria>X venceu!</p>
-    </div>
-
-    <script src="../js/game.js"></script>
+        <script src="../js/game.js"></script>
     </body>
 </html>
