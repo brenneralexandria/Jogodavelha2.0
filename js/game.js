@@ -5,10 +5,9 @@ const cells = document.querySelectorAll(".cell");
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
 
-let TipoDeJogo = true;
-// let TipoDeJogo = "automatico";
+
+let TipoDeJogo = "automatico";
 let proximajogada = true;
-let fimdeJogo = false;
 
 const jogadorX = {
     simbol: "X",
@@ -35,7 +34,7 @@ const jogadasvencedoras = [ // Jogadas para possíveis vitórias.
 
 document.addEventListener("click", (event) => { // Para identificar um uvento de clique dentro da célula.
     if(event.target.matches(".cell")) { // Para somente os cliques de dentro da célula serem identficados.
-        jogar(event.target.id, jogadorX);
+        jogar(event.target.id);
         setTimeout(() => Bot(), 500);       
     }   
 });
@@ -45,11 +44,31 @@ function IniciarJogo (tipoDeJogo) { // Função para iniciar o tipo de jogo sele
     console.log("Iniciando jogo " + tipoDeJogo);
     switch(TipoDeJogo){
         case "automatico":
-            jogadorX.isBot=true;
+            jogadorX.isBot=false;
             jogadorO.isBot=true;
             jogar()
             break;
     }
+}
+
+function Bot() {
+    const posicoesDisponiveis = []; // Identificar qual posição está disponivel e fazer uma jogada.
+    for (index in cells) {
+        if(!isNaN(index)) {
+            if ( // Verificar se alguma das células está preenchida.
+                !cells[index].classList.contains("X") && 
+                !cells[index].classList.contains("O")
+            ) {
+                posicoesDisponiveis.push(index); // Caso alguma das posições esteja disponivel, faça a jogada.
+            }
+        }
+    }
+
+    const posicaoAleatoria = Math.floor( // Para arredondar e escolher um número inteiro.
+        Math.random() * posicoesDisponiveis.length // Para os números aleátorios estejam dentro das posicoes disponiveis.
+    );
+
+    jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO.simbol);       
 }
 
 function jogar(id) { // Função para começar o jogo e identificar de quem é a vez de jogar.
@@ -68,7 +87,8 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
                         setTimeout(() =>  Bot(jogadorO.simbol), 1000);
                         proximajogada = false;
                     }
-            }   
+            }
+            
     if(id) {
         cell.textContent = jogada;
         cell.classList.add(jogada);
@@ -78,7 +98,7 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
     if(JogoTerminou(jogada) || Velha())  {
         console.log("O jogo terminou");
         jogadorvencedor(jogada);
-        return;
+        
     }
 
     jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
@@ -87,6 +107,7 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
             console.log("Jogador X é um bot")
             setTimeout(() =>  Bot(jogadorX.simbol), 700);
             proximajogada = ! proximajogada;
+            
         }
     }else {
         if(jogadorO.isBot) {
@@ -103,28 +124,6 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
    
 }
 
-function Bot() {
-    const posicoesDisponiveis = [];
-    for (index in cells) {
-        if(!isNaN(index)) {
-            if (
-                !cells[index].classList.contains("X") && 
-                !cells[index].classList.contains("O")
-            ) {
-                posicoesDisponiveis.push(index);
-            }
-        }
-    }
-
-    const posicaoAleatoria = Math.floor(
-        Math.random() * posicoesDisponiveis.length
-    );
-
-    if (!fimdeJogo) {
-        jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO.simbol);
-    }
-}
-
 function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos players
     if (Velha()) {
         MostrarVelha()   
@@ -134,14 +133,21 @@ function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos playe
     setTimeout(() => document.location.reload(true), 8000);
 } 
 
-function MostrarJogadorVencedor(jogada) {
-    TextoVitoria.innerText = "Vencedor: " + jogada;
-    MensagemVitoria.classList.add("MostrarMensagem");
-}
+function Velha() { // função para detectar se o jogo deu empate
+    let x = jogadorX.simbol;
+    let o = jogadorO.simbol;
 
-function MostrarVelha() { // Mensagem de empate
-    TextoVitoria.innerText = "Velha";
-    MensagemVitoria.classList.add("MostrarMensagem");
+    for (index in cells) {
+        if(!isNaN(index)) {
+            if(cells[index].classList.contains(jogadorX.simbol)) {
+                o++;
+            }
+            if (cells[index].classList.contains(jogadorO.simbol)) {
+                x++;
+                return x + o === 9 ? true : false;
+            }
+        }
+    } 
 }
 
 function JogoTerminou(jogada) {
@@ -153,20 +159,12 @@ function JogoTerminou(jogada) {
     return vencedor;
 }
 
-function Velha() { // função para detectar se o jogo deu empate
-    let x = jogadorX;
-    let o = jogadorO;
+function MostrarJogadorVencedor(jogada) {
+    TextoVitoria.innerText = "Vencedor: " + jogada;
+    MensagemVitoria.classList.add("MostrarMensagem");
+}
 
-    for (index in cells) {
-        if(!isNaN(index)) {
-            if(cells[index].classList.contains(jogadorX.simbol)) {
-                o++;
-            }
-            if (cells[index].classList.contains(jogadorO.simbol)) {
-                x++;
-                return x + o === 9 ? true : false;
-            }
-
-        }
-    } 
+function MostrarVelha() { // Mensagem de empate
+    TextoVitoria.innerText = "Velha";
+    MensagemVitoria.classList.add("MostrarMensagem");
 }

@@ -11,7 +11,7 @@ h1 {
     text-align: center;
     font-size: 50px;
     color: rgb(255, 72, 0);
-    margin: 64px 0 64px 0;
+    margin: 64px 0 25px 0;
 }
 
 .container {
@@ -19,17 +19,17 @@ h1 {
     justify-content: center;
     grid-template-columns: repeat(3, auto);
     text-align: center;
-    
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     background: #eee;
     padding: 15px;
     margin: 5px;
     cursor: pointer;
     color: black;
+    font-size: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,9 +37,9 @@ h1 {
 
 .btn-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    text-align: center;
+    flex-direction: column;
     margin-top: 10px;
 }
 
@@ -49,7 +49,7 @@ h1 {
     padding: 0.6em;
     text-decoration: none;
     border: 1px solid #ccc;
-    width: 160px;
+    width: 200px;
     background-color: #e5e5e5;
     color: #000;
 }
