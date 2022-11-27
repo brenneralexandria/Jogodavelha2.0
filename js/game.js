@@ -34,7 +34,7 @@ const jogadasvencedoras = [ // Jogadas para possíveis vitórias.
 
 document.addEventListener("click", (event) => { // Para identificar um uvento de clique dentro da célula.
     if(event.target.matches(".cell")) { // Para somente os cliques de dentro da célula serem identficados.
-        jogar(event.target.id);
+        jogar(event.target.id, jogadorX.simbol);
         setTimeout(() => Bot(), 500);       
     }   
 });
@@ -45,10 +45,65 @@ function IniciarJogo (tipoDeJogo) { // Função para iniciar o tipo de jogo sele
     switch(TipoDeJogo){
         case "automatico":
             jogadorX.isBot=false;
-            jogadorO.isBot=true;
+            jogadorO.isBot=false;
             jogar()
             break;
     }
+}
+
+function jogar(id) { // Função para começar o jogo e identificar de quem é a vez de jogar.
+    const cell = document.getElementById(id);
+    let jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol; // Mudar a vez do jogador.
+        console.log("Realizando a jogada " + jogada);
+           
+            if(jogada === 'X') { // Para saber se quem está jogadno é um bot.
+                if(jogadorX.isBot) {
+                    console.log("Jogador X é um bot")
+                    setTimeout(() =>  Bot(jogadorX.simbol), 700); // Determinar o tempo de cada jogada
+                }
+            }else {
+                    if(jogadorO.isBot) {
+                        console.log("Jogador O é um bot")
+                        setTimeout(() =>  Bot(jogadorO.simbol), 1000);
+                    }
+            }
+
+            MensagemVitoria.classList.remove("MostrarMensagem")
+            
+    if(id) {
+        cell.textContent = jogada;
+        cell.classList.add(jogada);
+    }
+    
+    proximajogada = ! proximajogada;
+    if(JogoTerminou(jogada) || Velha())  {
+        console.log("O jogo terminou");
+        jogadorvencedor(jogada);
+    }
+
+    jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
+    if(jogada === 'X') {
+        if(jogadorX.isBot) {
+            console.log("Jogador X é um bot")
+            setTimeout(() =>  Bot(jogadorX.simbol), 700);
+            proximajogada = ! proximajogada;
+        }
+    }else {
+        if(jogadorO.isBot) {
+            console.log("Jogador O é um bot")
+            setTimeout(() =>  Bot(jogadorO.simbol), 1000);
+            proximajogada = ! proximajogada;
+        }
+    }
+
+    if(TipoDeJogo === "automatico") {  
+        if(JogoTerminou(jogada) || Velha())  {
+            console.log("O jogo terminou");
+            jogadorvencedor(jogada);
+        }else {
+            setTimeout(() => jogar(), 8000)
+            }
+    }      
 }
 
 function Bot() {
@@ -68,60 +123,7 @@ function Bot() {
         Math.random() * posicoesDisponiveis.length // Para os números aleátorios estejam dentro das posicoes disponiveis.
     );
 
-    jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO.simbol);       
-}
-
-function jogar(id) { // Função para começar o jogo e identificar de quem é a vez de jogar.
-    const cell = document.getElementById(id);
-    let jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol; // Mudar a vez do jogador.
-        console.log("Realizando a jogada " + jogada);
-           
-            if(jogada === "X") { // Para saber se quem está jogadno é um bot.
-                if(jogadorX.isBot) {
-                    console.log("Jogador X é um bot")
-                    setTimeout(() =>  Bot(jogadorX.simbol), 700); // Determinar o tempo de cada jogada
-                }
-            }else {
-                    if(jogadorO.isBot) {
-                        console.log("Jogador O é um bot")
-                        setTimeout(() =>  Bot(jogadorO.simbol), 1000);
-                        proximajogada = false;
-                    }
-            }
-            
-    if(id) {
-        cell.textContent = jogada;
-        cell.classList.add(jogada);
-    }
-    
-    proximajogada = ! proximajogada;
-    if(JogoTerminou(jogada) || Velha())  {
-        console.log("O jogo terminou");
-        jogadorvencedor(jogada);
-        
-    }
-
-    jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol;
-    if(jogada === 'X') {
-        if(jogadorX.isBot) {
-            console.log("Jogador X é um bot")
-            setTimeout(() =>  Bot(jogadorX.simbol), 700);
-            proximajogada = ! proximajogada;
-            
-        }
-    }else {
-        if(jogadorO.isBot) {
-            console.log("Jogador O é um bot")
-            setTimeout(() =>  Bot(jogadorO.simbol), 1000);
-            proximajogada = ! proximajogada;
-        }
-    }
-
-    if(JogoTerminou(jogada) || Velha())  {
-        console.log("O jogo terminou");
-        jogadorvencedor(jogada);
-    }
-   
+    jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO.simbol);
 }
 
 function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos players
@@ -130,24 +132,6 @@ function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos playe
     }else {
         MostrarJogadorVencedor(jogada);
     }
-    setTimeout(() => document.location.reload(true), 8000);
-} 
-
-function Velha() { // função para detectar se o jogo deu empate
-    let x = jogadorX.simbol;
-    let o = jogadorO.simbol;
-
-    for (index in cells) {
-        if(!isNaN(index)) {
-            if(cells[index].classList.contains(jogadorX.simbol)) {
-                o++;
-            }
-            if (cells[index].classList.contains(jogadorO.simbol)) {
-                x++;
-                return x + o === 9 ? true : false;
-            }
-        }
-    } 
 }
 
 function JogoTerminou(jogada) {
@@ -167,4 +151,21 @@ function MostrarJogadorVencedor(jogada) {
 function MostrarVelha() { // Mensagem de empate
     TextoVitoria.innerText = "Velha";
     MensagemVitoria.classList.add("MostrarMensagem");
+}
+
+function Velha() { // função para detectar se o jogo deu empate
+    let x = 0;
+    let o = 0;
+
+    for (index in cells) {
+        if(!isNaN(index)) {
+            if(cells[index].classList.contains(jogadorX.simbol)) {
+                x++;
+            }
+            if (cells[index].classList.contains(jogadorO.simbol)) {
+                o++;
+            }
+        }
+    }
+            return x + o === 9 ? true : false; 
 }
