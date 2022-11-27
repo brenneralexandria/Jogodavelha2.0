@@ -1,10 +1,12 @@
 // Validação de jogadas, Vencedor e velha. 
 
 const cells = document.querySelectorAll(".cell");
+
 const TextoVitoria = document.querySelector("[texto-de-vitoria]");
 const MensagemVitoria = document.querySelector("[mensagem-de-vitoria]");
 
-let TipoDeJogo = "vsmaquina";
+let TipoDeJogo = true;
+// let TipoDeJogo = "automatico";
 let proximajogada = true;
 let fimdeJogo = false;
 
@@ -50,7 +52,6 @@ function IniciarJogo (tipoDeJogo) { // Função para iniciar o tipo de jogo sele
     }
 }
 
-
 function jogar(id) { // Função para começar o jogo e identificar de quem é a vez de jogar.
     const cell = document.getElementById(id);
     let jogada = proximajogada ? jogadorX.simbol : jogadorO.simbol; // Mudar a vez do jogador.
@@ -65,7 +66,7 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
                     if(jogadorO.isBot) {
                         console.log("Jogador O é um bot")
                         setTimeout(() =>  Bot(jogadorO.simbol), 1000);
-                        proximajogada = true;
+                        proximajogada = false;
                     }
             }   
     if(id) {
@@ -99,10 +100,7 @@ function jogar(id) { // Função para começar o jogo e identificar de quem é a
         console.log("O jogo terminou");
         jogadorvencedor(jogada);
     }
-
-    if(TipoDeJogo === "automatico") {
-        setTimeout(() => jogar(), 1000);       
-    }    
+   
 }
 
 function Bot() {
@@ -123,9 +121,18 @@ function Bot() {
     );
 
     if (!fimdeJogo) {
-        jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO);
+        jogar(posicoesDisponiveis[posicaoAleatoria], jogadorO.simbol);
     }
 }
+
+function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos players
+    if (Velha()) {
+        MostrarVelha()   
+    }else {
+        MostrarJogadorVencedor(jogada);
+    }
+    setTimeout(() => document.location.reload(true), 8000);
+} 
 
 function MostrarJogadorVencedor(jogada) {
     TextoVitoria.innerText = "Vencedor: " + jogada;
@@ -136,16 +143,6 @@ function MostrarVelha() { // Mensagem de empate
     TextoVitoria.innerText = "Velha";
     MensagemVitoria.classList.add("MostrarMensagem");
 }
-
-function jogadorvencedor(jogada) { // Mensagem para a vitoria de algum dos players
-    fimdeJogo = true;
-    if (Velha()) {
-        MostrarVelha();   
-    }else {
-        MostrarJogadorVencedor(jogada);
-    }
-    setTimeout(() => document.location.reload(true), 8000);
-} 
 
 function JogoTerminou(jogada) {
     const vencedor = jogadasvencedoras.some((jogds) => { // analisar dentro das jogadas vencedoras 1 por 1 se houve um vencedor.
@@ -162,13 +159,14 @@ function Velha() { // função para detectar se o jogo deu empate
 
     for (index in cells) {
         if(!isNaN(index)) {
-        if(cells[index].classList.contains(jogadorX.simbol)) {
-            o++;
+            if(cells[index].classList.contains(jogadorX.simbol)) {
+                o++;
+            }
+            if (cells[index].classList.contains(jogadorO.simbol)) {
+                x++;
+                return x + o === 9 ? true : false;
+            }
+
         }
-        if (cells[index].classList.contains(jogadorO.simbol)) {
-            x++;
-        }
-    }
-}
-    return x + o === 9 ? true : false;
+    } 
 }
