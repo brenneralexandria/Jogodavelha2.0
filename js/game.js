@@ -63,5 +63,18 @@ function JogarNovo(id){
     }
 
     jogadorAtual = jogadorAtual == gameAtual.player1 ? gameAtual.player2 : gameAtual.player1;
+}
+
+function ClearAll(){
+
+    for(let i = 0; i < gameAtual.placesBoard.length; i++){
+        for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
+            var ind = '';
+            var card = document.getElementById(ind.concat(i,j));
+            console.log(ind.concat(ind.concat(i,j)))
+            card.innerText = '';
+            gameAtual.placesBoard[i][j] = '';
+        }
+    }
 
 }
