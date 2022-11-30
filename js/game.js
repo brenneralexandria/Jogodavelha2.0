@@ -40,3 +40,28 @@ function IniciaNovoJogo(){
     botaoInicio.innerText = "Reiniciar Jogo";
     botaoInicio.onclick = function(){ClearAll()};
 }
+
+//Ação de jogar
+function JogarNovo(id){
+
+    const cell = document.getElementById(id);
+
+
+    if(id) {
+        const col = String(id).substring(0,1);
+        const row = String(id).substring(1);
+        cell.textContent = jogadorAtual.symbol;
+        cell.classList.add(jogadorAtual.symbol);
+
+        gameAtual.placesBoard[col][row] = jogadorAtual.symbol;
+
+        if(gameAtual.placesBoard[col].every( v => v === gameAtual.placesBoard[col][row])){
+            // alert( "O jogador " + jogadorAtual.symbol + " venceu!");
+            ClearAll();
+        }
+
+    }
+
+    jogadorAtual = jogadorAtual == gameAtual.player1 ? gameAtual.player2 : gameAtual.player1;
+
+}
