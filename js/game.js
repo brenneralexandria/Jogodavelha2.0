@@ -1,105 +1,179 @@
 let jogadorAtual;
 let gameAtual;
-let modojogo = false;
+let modoJogo = false;
 
-document.addEventListener("click", (event) => { // Para identificar um evento de clique dentro da célula.
+document.addEventListener("click", (event) => { // Para identificar um uvento de clique dentro da célula.
     if(event.target.matches(".cell")) { // Para somente os cliques de dentro da célula serem identficados.
-        JogarNovo(event.target.id);
-        setTimeout(() => Bot(), 500);       
+        JogarNovo(event.target.id);      
     }   
 });
 
-function IniciaNovoJogo(){ // para iniciar o jogo
+function IniciaNovoJogo(){
 
-    //Declaração dos dois jogadores
-    const player1 = new Player("X", modojogo);
+    //Declaração e instância dos dois jogadores
+    const player1 = new Player("X", modoJogo);
     const player2 = new Player("O", true); 
+
     
-    // Mostra quem vai começar o jogo.
+    //Seta quem começa o jogo
     jogadorAtual = player1;
 
-    //Declaração de matriz dos locais do tabuleiro
+    //Declaração e instância de matriz dos locais do tabuleiro
     var matriz = [ ["","",""],
                    ["","",""],
                    ["","",""] ];
+   
 
     gameAtual = new Board(player1, player2, matriz);
 
     var container = document.getElementById("containerBoard");
-               
+
     for(let i = 0; i < gameAtual.placesBoard.length; i++){
         for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
             var ind = '';
             var card = document.createElement('div');
             card.setAttribute("id", ind.concat(i,j));
-            card.classList.add('cell'); // As atribuções para a div
-                container.appendChild(card); // Adicionando o elemento criando dentro do meu board
+            card.classList.add('cell');
+            container.appendChild(card); 
         }
     }
-      
-    // Para mudar a função do botão de iniciar para Reiniciar
-    var botaoInicio = document.getElementById("btnStartGame"); // mudar a função de iniciar jogo para reiniciar
+
+
+    //Mudar função do botão de Iniciar para Reiniciar
+    var botaoInicio = document.getElementById("btnStartGame");
     botaoInicio.innerText = "Reiniciar Jogo";
     botaoInicio.onclick = function(){ClearAll()};
 
     if(jogadorAtual.isBot)
-        bot();
+        Bot();     
 }
 
 //Ação de jogar
 function JogarNovo(id){
-    // Busca elemento HTML para inserir o símbolo de jogador.
+
+    //Busca elemento HTML para inserir o símbolo do jogador
     const cell = document.getElementById(id);
 
     if(id) {
-        // Retorno o núero da coluna.
+        //Retorna o número da coluna
         const col = String(id).substring(0,1);
-        // Retorna o número da linha.
+        //Retorna o número da linha
         const row = String(id).substring(1);
 
-        // validar se a posição está preenchida.
+        //Validar se a posição não está preenchida
         if(gameAtual.placesBoard[col][row] === "" || gameAtual.placesBoard[col][row] === null){
-            cell.textContent = jogadorAtual.symbol; //Insere o símbolo no elemento no HTML.
-            gameAtual.placesBoard[col][row] = jogadorAtual.symbol; // Insere o símbolo na posição da matriz.
+            cell.textContent = jogadorAtual.symbol; //Insere o símbolo no elemento no HTML
+            gameAtual.placesBoard[col][row] = jogadorAtual.symbol; // Insere o símbolo na posição da matriz
 
-            var validacao = ValidaPartida(col, row); // Valida se houve ganhador ou velha.
+            var validacao = ValidaPartida(col, row); // Valida se houve ganhador ou velha
             
-            // Caso a partida seja finalizada, stopa a função.
+            // Caso a partida seja finalizada, stopa a função
             if(validacao)
                 return;
 
-            // Saber de quem é a vez de jogar.
+            // permutação de jogagores
             jogadorAtual = jogadorAtual == gameAtual.player1 ? gameAtual.player2 : gameAtual.player1;
-
-            // Valida se o jogador é um Bot.
+            
+            //Valida se o jogador é um Bot
             if(jogadorAtual.isBot){
                 Bot();
             }
             
         }
-
+        
+        
     }
-    
+
+
 }
 
-// Limpa o tabuleiro e reinicia a partida.
+//Limpa o tabuleiro atual e reinicia a partida
 function ClearAll(){
 
     for(let i = 0; i < gameAtual.placesBoard.length; i++){
         for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
             var ind = '';
             var card = document.getElementById(ind.concat(i,j));
-            console.log(ind.concat(ind.concat(i,j)))
-            card.innerText = '';
             gameAtual.placesBoard[i][j] = '';
-            break;
+
+            var parentCard = card.parentElement;
+            parentCard.removeChild(card);
         }
     }
 
     IniciaNovoJogo();
 }
 
+//Verifica se houve ganhador ou se deu velha
+function ValidaPartida(col, row){
 
+    var listValuesRow = []; // Listar todos os símbolos da linha
+    var listValuesVector = []; // Listar todos os símbolos do vetor
+    var listValuesInverseVector = []; // Listar todos os símbolos do vetor inverso
+
+    var velha = true; // variavel para verificar se o jogo deu velha
+    var fim = false; // variável para verificar se o jogo finalizou
+
+    for(let i = 0; i < 3; i++){
+        listValuesRow.push(gameAtual.placesBoard[i][row]); // insere os símbolos da mesma linha
+        listValuesVector.push(gameAtual.placesBoard[i][i]); // insere os símbolos do vetor
+
+        for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
+            if(i + j == 2){
+                listValuesInverseVector.push(gameAtual.placesBoard[i][j]); // insere os símbolos do vetor inverso
+            }
+        
+            if(gameAtual.placesBoard[i][j] === "" || gameAtual.placesBoard[i][j] === null)
+                velha = false;  //seta a velha como falso caso possua campos a serem preenchidos
+        }
+    }
+
+    // verifica as possibilidades de vitória do jogagor atual
+    if(gameAtual.placesBoard[col].every( v => v === gameAtual.placesBoard[col][row]) 
+        || listValuesRow.every(v => v === gameAtual.placesBoard[col][row])
+        || listValuesVector.every(v => v === gameAtual.placesBoard[col][row])
+        || listValuesInverseVector.every(v => v === gameAtual.placesBoard[col][row])){
+        alert( "O jogador " + jogadorAtual.symbol + " venceu!");
+        setTimeout(() => ClearAll(), 300);
+        fim = true;
+        
+    } else if(velha) // valida se o jogo não houve ganhador e deu velha
+    {
+        alert("O jogo deu velha!")
+        ClearAll();
+        fim = true;
+    }
+    
+    return fim;
+    
+}
+
+//Executa função automática de inserir valor
+function Bot(){
+    var indicesDisponiveis = [];
+
+    // percorre a matriz para buscar posições disponíveis para a jogada
+    for(let i = 0; i < 3; i++){
+        for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
+            var ind = '';
+            if(gameAtual.placesBoard[i][j] === "" || gameAtual.placesBoard[i][j] === null)
+                indicesDisponiveis.push(ind.concat(i,j));
+        }
+    }
+
+    //randomização da jogada
+    const position = Math.floor(Math.random() * indicesDisponiveis.length);
+    // executa a função de Jogar após 1 segundo
+    setTimeout(() => JogarNovo(indicesDisponiveis[position]), 1000);
+
+}
+
+function SetarModoJogo(){
+    modoJogo = !modoJogo;
+
+    var botaoModo = document.getElementById("btnModeGame");
+    botaoModo.innerText = !modoJogo ?  "Máquina vs. Máquina" : "Pessoa vs. Máquina";
+}
 
 //Entidade Jogador
 class Player{
@@ -114,6 +188,6 @@ class Board{
     constructor(player1, player2, placesBoard){
         this.player1 = player1;
         this.player2 = player2;
-        this.placesBoard = placesBoard; // as posições do tabuleiro
+        this.placesBoard = placesBoard;
     }
 }

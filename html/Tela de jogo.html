@@ -10,21 +10,21 @@
     
     <body>
         <main>
-            <h1>Jogo da Velha</h1>      
-            
+                <h1>Jogo da Velha</h1>
+
+                    <div id="containerBoard" class="container"></div>
+        </main>  
+          
+                <div class="mensagemvitoria" mensagem-de-vitoria>  <!--Mensagem para quem venceu ou velha-->
+                    <p class="textovitoria" texto-de-vitoria></p>
+                </div>
+
                 <div class="btn-container"> <!-- Box dos botões --> 
-
-        </main>    
-
-        <div class="btn-container"> 
-            <!-- Botão para jogar vs máquina --> 
-            <a id="btnModeGame" onclick="SetarModoJogo()" class="Botão1" >Máquina vs. Máquina</a>
-        </div>
-        <div class="btn-container">
-            <!-- Botão para reiniciar o jogo --> 
-            <a id="btnStartGame" onclick="IniciaNovoJogo()" class="Botão1" >Iniciar o Jogo</a>
+                    <a id="btnModeGame" onclick="SetarModoJogo()" class="Botão1" >Máquina vs. Máquina</a>
+                </div>
+                <div class="btn-container"> <!-- Box dos botões --> 
+                    <a id="btnStartGame" onclick="IniciaNovoJogo()" class="Botão1" >Iniciar o Jogo</a>
                 </div>   
-                 
         <script src="../js/game.js"></script>
     </body>
 </html>             
