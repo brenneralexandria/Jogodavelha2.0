@@ -78,3 +78,20 @@ function ClearAll(){
     }
 
 }
+
+//Entidade Jogador
+class Player{
+    constructor(symbol, isBot){
+        this.symbol = symbol; //X  ou O
+        this.isBot = isBot; // true é a máquina e se for false é jogador
+    }
+}
+
+//Entidade Tabuleio de Jogo
+class Board{
+    constructor(player1, player2, placesBoard){
+        this.player1 = player1;
+        this.player2 = player2;
+        this.placesBoard = placesBoard;
+    }
+}
