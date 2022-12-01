@@ -9,7 +9,7 @@ document.addEventListener("click", (event) => { // Para identificar um evento de
     }   
 });
 
-function IniciaNovoJogo(){
+function IniciaNovoJogo(){ // para iniciar o jogo
 
     //Declaração dos dois jogadores
     const player1 = new Player("X", true);
@@ -31,12 +31,12 @@ function IniciaNovoJogo(){
             var ind = '';
             var card = document.createElement('div');
             card.setAttribute("id", ind.concat(i,j));
-            card.classList.add('cell');
-                container.appendChild(card);
+            card.classList.add('cell'); // As atribuções para a div
+                container.appendChild(card); // Adicionando o elemento criando dentro do meu board
         }
     }
                
-    var botaoInicio = document.getElementById("btnStartGame");
+    var botaoInicio = document.getElementById("btnStartGame"); // mudar a função de iniciar jogo para reiniciar
     botaoInicio.innerText = "Reiniciar Jogo";
     botaoInicio.onclick = function(){ClearAll()};
 }
@@ -47,7 +47,7 @@ function JogarNovo(id){
     const cell = document.getElementById(id);
 
 
-    if(id) {
+    if(id) { // identificar se não está nulo
         const col = String(id).substring(0,1);
         const row = String(id).substring(1);
         cell.textContent = jogadorAtual.symbol;
@@ -92,6 +92,6 @@ class Board{
     constructor(player1, player2, placesBoard){
         this.player1 = player1;
         this.player2 = player2;
-        this.placesBoard = placesBoard;
+        this.placesBoard = placesBoard; // as posições do tabuleiro
     }
 }
