@@ -1,9 +1,9 @@
 let jogadorAtual;
 let gameAtual;
+let modojogo = false;
 
 document.addEventListener("click", (event) => { // Para identificar um evento de clique dentro da célula.
     if(event.target.matches(".cell")) { // Para somente os cliques de dentro da célula serem identficados.
-        //jogar(event.target.id, jogadorX.simbol);
         JogarNovo(event.target.id);
         setTimeout(() => Bot(), 500);       
     }   
@@ -12,9 +12,10 @@ document.addEventListener("click", (event) => { // Para identificar um evento de
 function IniciaNovoJogo(){ // para iniciar o jogo
 
     //Declaração dos dois jogadores
-    const player1 = new Player("X", true);
+    const player1 = new Player("X", modojogo);
     const player2 = new Player("O", true); 
     
+    // Mostra quem vai começar o jogo.
     jogadorAtual = player1;
 
     //Declaração de matriz dos locais do tabuleiro
@@ -35,36 +36,53 @@ function IniciaNovoJogo(){ // para iniciar o jogo
                 container.appendChild(card); // Adicionando o elemento criando dentro do meu board
         }
     }
-               
+      
+    // Para mudar a função do botão de iniciar para Reiniciar
     var botaoInicio = document.getElementById("btnStartGame"); // mudar a função de iniciar jogo para reiniciar
     botaoInicio.innerText = "Reiniciar Jogo";
     botaoInicio.onclick = function(){ClearAll()};
+
+    if(jogadorAtual.isBot)
+        bot();
 }
 
 //Ação de jogar
 function JogarNovo(id){
-
+    // Busca elemento HTML para inserir o símbolo de jogador.
     const cell = document.getElementById(id);
 
-
-    if(id) { // identificar se não está nulo
+    if(id) {
+        // Retorno o núero da coluna.
         const col = String(id).substring(0,1);
+        // Retorna o número da linha.
         const row = String(id).substring(1);
-        cell.textContent = jogadorAtual.symbol;
-        cell.classList.add(jogadorAtual.symbol);
 
-        gameAtual.placesBoard[col][row] = jogadorAtual.symbol;
+        // validar se a posição está preenchida.
+        if(gameAtual.placesBoard[col][row] === "" || gameAtual.placesBoard[col][row] === null){
+            cell.textContent = jogadorAtual.symbol; //Insere o símbolo no elemento no HTML.
+            gameAtual.placesBoard[col][row] = jogadorAtual.symbol; // Insere o símbolo na posição da matriz.
 
-        if(gameAtual.placesBoard[col].every( v => v === gameAtual.placesBoard[col][row])){
-            // alert( "O jogador " + jogadorAtual.symbol + " venceu!");
-            ClearAll();
+            var validacao = ValidaPartida(col, row); // Valida se houve ganhador ou velha.
+            
+            // Caso a partida seja finalizada, stopa a função.
+            if(validacao)
+                return;
+
+            // Saber de quem é a vez de jogar.
+            jogadorAtual = jogadorAtual == gameAtual.player1 ? gameAtual.player2 : gameAtual.player1;
+
+            // Valida se o jogador é um Bot.
+            if(jogadorAtual.isBot){
+                Bot();
+            }
+            
         }
 
     }
-
-    jogadorAtual = jogadorAtual == gameAtual.player1 ? gameAtual.player2 : gameAtual.player1;
+    
 }
 
+// Limpa o tabuleiro e reinicia a partida.
 function ClearAll(){
 
     for(let i = 0; i < gameAtual.placesBoard.length; i++){
@@ -74,10 +92,14 @@ function ClearAll(){
             console.log(ind.concat(ind.concat(i,j)))
             card.innerText = '';
             gameAtual.placesBoard[i][j] = '';
+            break;
         }
     }
 
+    IniciaNovoJogo();
 }
+
+
 
 //Entidade Jogador
 class Player{
