@@ -7,18 +7,22 @@
         <link type="text/css" rel="stylesheet" href="../css/style.css" />
         <title>Jogo da Velha</title>
     </head>
-    
     <body>
-        <main>
-            <h1>Jogo da Velha</h1>
-            <div id="containerBoard" class="container"></div>
-        </main>  
+        <div class="tela">
+            <main>
+                <h1>Jogo da Velha</h1>
+                <div id="containerBoard" class="container"></div>
+            </main>
             <div class="btn-container"> <!-- Box dos botões --> 
-                <a id="btnModeGame" onclick="SetarModoJogo()" class="Botão1" >Máquina vs. Máquina</a>
+                <a id="btnModeGame" onclick="playerXmaq()" class="Botão" >Player vs. Máquina</a>
             </div>
             <div class="btn-container"> <!-- Box dos botões --> 
-                <a id="btnModeGame" onclick="SetarModoJogo()" class="Botão1" >Player vs. Máquina</a>
+                    <a id="btnModeGame" onclick="maqXmaq()" class="Botão" >Máquina vs. Máquina</a>
             </div>
+            <div class="btn-container"> <!-- Box dos botões --> 
+                <a id="btnReinicia" onclick="reiniciaJogo()" class="Botão" >Reiniciar</a>
+            </div>
+        </div>
         <script src="../js/game.js"></script>
     </body>
 </html>             

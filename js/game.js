@@ -38,12 +38,6 @@ function IniciaNovoJogo(){
         }
     }
 
-
-    //Mudar função do botão de Iniciar para Reiniciar
-    var botaoInicio = document.getElementById("btnStartGame");
-    botaoInicio.innerText = "Reiniciar Jogo";
-    botaoInicio.onclick = function(){ClearAll()};
-
     if(jogadorAtual.isBot)
         Bot();     
 }
@@ -77,13 +71,10 @@ function JogarNovo(id){
             //Valida se o jogador é um Bot
             if(jogadorAtual.isBot){
                 Bot();
-            }
-            
-        }
-        
+            }     
+        }  
         
     }
-
 
 }
 
@@ -141,7 +132,7 @@ function ValidaPartida(col, row){
     {
         alert("O jogo deu velha!")
         ClearAll();
-        fim = true;
+        fim = false;
     }
     
     return fim;
@@ -165,15 +156,22 @@ function Bot(){
     const position = Math.floor(Math.random() * indicesDisponiveis.length);
     // executa a função de Jogar após 1 segundo
     setTimeout(() => JogarNovo(indicesDisponiveis[position]), 1000);
-
 }
 
-function SetarModoJogo(){
+function playerXmaq(){
+    modoJogo = modoJogo;
+    IniciaNovoJogo()
+}
+
+function maqXmaq(){
     modoJogo = !modoJogo;
-
-    var botaoModo = document.getElementById("btnModeGame");
-    botaoModo.innerText = !modoJogo ?  "Máquina vs. Máquina" : "Pessoa vs. Máquina";
+    IniciaNovoJogo()
 }
+
+function reiniciaJogo() {
+    ClearAll();
+}
+
 
 //Entidade Jogador
 class Player{
