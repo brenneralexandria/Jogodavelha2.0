@@ -172,7 +172,6 @@ function reiniciaJogo() {
     ClearAll();
 }
 
-
 //Entidade Jogador
 class Player{
     constructor(symbol, isBot){
