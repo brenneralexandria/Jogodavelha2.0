@@ -9,12 +9,10 @@ document.addEventListener("click", (event) => { // Para identificar um uvento de
 });
 
 function IniciaNovoJogo(){
-
     //Declaração e instância dos dois jogadores
     const player1 = new Player("X", modoJogo);
     const player2 = new Player("O", true); 
 
-    
     //Seta quem começa o jogo
     jogadorAtual = player1;
 
@@ -42,8 +40,9 @@ function IniciaNovoJogo(){
     }
 
     if(jogadorAtual.isBot)
-        Bot();     
+        Bot();
 }
+
 
 
 //Ação de jogar
