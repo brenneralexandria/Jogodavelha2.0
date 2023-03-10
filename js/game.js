@@ -28,19 +28,23 @@ function IniciaNovoJogo(){
 
     var container = document.getElementById("containerBoard");
 
-    for(let i = 0; i < gameAtual.placesBoard.length; i++){
-        for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
-            var ind = '';
-            var card = document.createElement('div');
-            card.setAttribute("id", ind.concat(i,j));
-            card.classList.add('cell');
-            container.appendChild(card); 
+    //Adiciona células ao tabuleiro
+    if (container.childNodes.length === 0) { //Adiciona células somente se o container ainda não possuir filhos
+        for(let i = 0; i < gameAtual.placesBoard.length; i++){
+            for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
+                var ind = '';
+                var card = document.createElement('div');
+                card.setAttribute("id", ind.concat(i,j));
+                card.classList.add('cell');
+                container.appendChild(card); 
+            }
         }
     }
 
     if(jogadorAtual.isBot)
         Bot();     
 }
+
 
 //Ação de jogar
 function JogarNovo(id){
@@ -80,18 +84,11 @@ function JogarNovo(id){
 
 //Limpa o tabuleiro atual e reinicia a partida
 function ClearAll(){
-
-    for(let i = 0; i < gameAtual.placesBoard.length; i++){
-        for(let j = 0; j < gameAtual.placesBoard[i].length; j++){
-            var ind = '';
-            var card = document.getElementById(ind.concat(i,j));
-            gameAtual.placesBoard[i][j] = '';
-
-            var parentCard = card.parentElement;
-            parentCard.removeChild(card);
-        }
+    document.getElementById("containerBoard").innerHTML = "";
+    var container = document.getElementById("containerBoard");
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
     }
-
     IniciaNovoJogo();
 }
 
@@ -136,7 +133,6 @@ function ValidaPartida(col, row){
     }
     
     return fim;
-    
 }
 
 //Executa função automática de inserir valor
@@ -171,6 +167,12 @@ function maqXmaq(){
 function reiniciaJogo() {
     ClearAll();
 }
+
+const botaoVoltar = document.getElementById("botaoVoltar");
+    botaoVoltar.addEventListener("click", () => {
+  location.reload(); // recarrega a página
+});
+
 
 //Entidade Jogador
 class Player{
